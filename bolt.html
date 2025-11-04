@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="hu">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Termékek</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body onload="epitsTelefonKartyak('termekDoboz', telefonLista)">
+    <div class="fejlec">
+      <div class="menu">
+        <div><strong>Telefon webáruház</strong></div>
+        <div>
+          <a href="index.html">Kezdőlap</a>
+          <a href="bolt.html">Áruház</a>
+          <a href="kapcsolat.html">Kapcsolat</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="tartalom">
+      <div class="kartya">
+        <h1>Termékek</h1>
+        
+        <div class="keresoSor" style="margin:10px 0">
+          <input id="markaKeresoBemenet" class="bemenet" type="text" placeholder="Márka (pl. Nokia)" />
+          <button class="gomb" onclick="(function() {
+            var keresett = document.getElementById('markaKeresoBemenet').value;
+            var talalatok = keresett ? keresMarkaAlapjan(telefonLista, keresett) : telefonLista;
+            epitsTelefonKartyak('termekDoboz', talalatok);
+            kiirUzenet('jegyzet','Találatok: <b>' + talalatok.length + '</b>');
+          })();">Keresés</button>
+
+          <button class="gomb" onclick="(function() {
+            var osszesDarab = osszegKeszletDb(telefonLista);
+            var legolcsobb = legolcsobbTelefon(telefonLista);
+            var legolcsobbSzoveg = legolcsobb ? (legolcsobb.nev + ' (' + legolcsobb.ar.toLocaleString('hu-HU') + ' Ft)') : 'nincs';
+            kiirUzenet('jegyzet','Összes készlet: <b>' + osszesDarab + '</b> | Legolcsóbb: <b>' + legolcsobbSzoveg + '</b>');
+          })();">Statisztika</button>
+
+        </div>
+
+        <div id="termekDoboz"></div>
+      </div>
+    </div>
+
+    <div id="jegyzet" class="jegyzet"></div>
+    <div class="lablec">Tamási Máté — Telefon Áruház</div>
+    <script src="script.js"></script>
+  </body>
+</html>
